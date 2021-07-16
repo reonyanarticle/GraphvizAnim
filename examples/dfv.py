@@ -17,33 +17,36 @@
 
 from random import sample
 
-from gvanim import Animation, render, gif
+from gvanim import Animation, gif, render
 
-N = range( 6 )
+N = range(6)
 K = 3
 
-G = dict( ( v, sample( N, K ) ) for v in N )
+G = dict((v, sample(N, K)) for v in N)
 
 ga = Animation()
 for v, adj in G.items():
     for u in adj:
-        ga.add_edge( v, u )
+        ga.add_edge(v, u)
 ga.next_step()
 
-seen = [ False for v in  N ]
-def dfv( v ):
-    ga.highlight_node( v )
-    ga.next_step()
-    seen[ v ] = True
-    for u in G[ v ]:
-        if not seen[ u ]:
-            ga.highlight_node( v )
-            ga.highlight_edge( v, u )
-            ga.next_step()
-            dfv( u )
+seen = [False for v in N]
 
-dfv( 0 )
+
+def dfv(v):
+    ga.highlight_node(v)
+    ga.next_step()
+    seen[v] = True
+    for u in G[v]:
+        if not seen[u]:
+            ga.highlight_node(v)
+            ga.highlight_edge(v, u)
+            ga.next_step()
+            dfv(u)
+
+
+dfv(0)
 
 graphs = ga.graphs()
-files = render( graphs, 'dfv', 'png' )
-gif( files, 'dfv', 50 )
+files = render(graphs, "dfv", "png")
+gif(files, "dfv", 50)

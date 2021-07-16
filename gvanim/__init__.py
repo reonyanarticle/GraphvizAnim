@@ -18,4 +18,4 @@
 from __future__ import absolute_import
 
 from gvanim.animation import Animation
-from gvanim.render import render, gif
+from gvanim.render import gif, render
